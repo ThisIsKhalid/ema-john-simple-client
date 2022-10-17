@@ -1,12 +1,37 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/UserContext';
 import './LogIn.css'
 
 const LogIn = () => {
+
+    const {signIn} = useContext(AuthContext);
+    const navigate = useNavigate();
+    const location = useLocation();
+    const form = location.state?.from?.pathname || '/'
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const form = event.target;
+        const email = form.email.value;
+        const password = form.password.value;
+
+        signIn(email, password)
+        .then( result => {
+            // console.log(result.user);
+            form.reset();
+            // navigate('/');
+            navigate(form, {replace: true});
+        })
+        .catch(error => {
+            console.error(error);
+        })
+    }
+
     return (
         <div className='form-container'>
             <h1 className='form-title'>Login</h1>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <div className="form-control">
                     <label htmlFor="email">Email</label>
                     <input type="email" name="email" id="email" placeholder='Your email' required/>

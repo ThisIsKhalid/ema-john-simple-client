@@ -8,6 +8,10 @@
     padding-right: 140px;
 }
 
+.link{
+    display: flex;
+    align-items: center;
+}
 .header a{
     color: #FFFFFF;
     text-decoration: none;
