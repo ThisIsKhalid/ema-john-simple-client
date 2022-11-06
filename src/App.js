@@ -15,43 +15,50 @@ import PrivateRoute from './routes/PrivateRoute';
 function App() {
   const router = createBrowserRouter([
     {
-      path:'/',
+      path: "/",
       element: <Main></Main>,
       children: [
         {
-          path: '/',
-          loader: () => fetch('products.json'),
-          element: <Shop></Shop>
+          path: "/",
+          // loader: () => fetch("http://localhost:5000/products"), 
+          element: <Shop></Shop>,
         },
         {
-          path:'orders',
+          path: "orders",
           loader: productsAndCartLoader,
-          element: <Orders></Orders>
+          element: <Orders></Orders>,
         },
         {
-          path: 'inventory',
-          element: <PrivateRoute><Inventory></Inventory></PrivateRoute>
+          path: "inventory",
+          element: (
+            <PrivateRoute>
+              <Inventory></Inventory>
+            </PrivateRoute>
+          ),
         },
         {
-          path: 'shipping',
-          element: <PrivateRoute><Shipping></Shipping></PrivateRoute>
+          path: "shipping",
+          element: (
+            <PrivateRoute>
+              <Shipping></Shipping>
+            </PrivateRoute>
+          ),
         },
         {
-          path:'about',
-          element:<About></About>
+          path: "about",
+          element: <About></About>,
         },
         {
-          path:'login',
-          element:<LogIn></LogIn>
+          path: "login",
+          element: <LogIn></LogIn>,
         },
         {
-          path:'signup',
-          element:<SignUp></SignUp>
-        }
-      ]
+          path: "signup",
+          element: <SignUp></SignUp>,
+        },
+      ],
     },
-    
-  ])
+  ]);
   return (
     <div>
       <RouterProvider router={router}></RouterProvider>
